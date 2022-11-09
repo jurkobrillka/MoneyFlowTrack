@@ -4,5 +4,6 @@ public class Main {
         System.out.println("Hello world!");
         int a = 8;
         a += 9;
+        System.out.println("a: "+a);
     }
 }
