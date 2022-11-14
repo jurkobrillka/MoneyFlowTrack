@@ -64,8 +64,10 @@ public class Block {
     }
 
     public void printCats(ArrayList<Block> list){
-        int topSizeTitle = 0;
-        int topSizeInfo = 0;
+        String title = "Title";
+        String basicInfo = "Basic info";
+        int topSizeTitle = title.length();
+        int topSizeInfo = basicInfo.length();
         for(Block b:list){
             if (b.getTitle().length() >= topSizeTitle){
                 topSizeTitle = b.getTitle().length();
@@ -77,9 +79,12 @@ public class Block {
         topSizeTitle+=2;
         topSizeInfo+=2;
 
-
-
+        //Actual printing
+        //Table is printing the last row when there is only one Cathegory (aint happening in normal world)
         printRow(1,topSizeTitle,topSizeInfo,new Block());
+        printRow(99,topSizeTitle,topSizeInfo,new Block(title,basicInfo));
+        printRow(2,topSizeTitle,topSizeInfo,new Block());
+
         for(Block b:list){
             printRow(99,topSizeTitle,topSizeInfo,b);
             printRow(2,topSizeTitle,topSizeInfo,b);
@@ -87,7 +92,6 @@ public class Block {
 
         printRow(3,topSizeTitle,topSizeInfo,new Block());
     }
-     //1 upper, 2middle, 3 lower, other value
     public void printRow(int level, int topTitle, int topInfo, Block b){
         int rowLength = topTitle+topInfo+3;
 
@@ -117,10 +121,11 @@ public class Block {
                     System.out.print(" ");
                 }
                 else{
-                    if (word1 == b.getTitle().length()){
+                    if (word1 >= b.getTitle().length()){
                         //print word2
-                        if (b.getBasicInfo().length() == word2){
+                        if (b.getBasicInfo().length() == word2 || word1<topTitle-2){
                             System.out.print(" ");
+                            word1++;
                         }
                         else {
                             System.out.print(b.getBasicInfo().charAt(word2));
