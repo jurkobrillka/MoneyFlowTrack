@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,16 +6,16 @@ public class Block {
 
     Scanner sc = new Scanner(System.in);
 
+    private BuffManager buffMan = BuffManager.BuffManager();
     private String title;
     private String basicInfo;
 
 
-    //defaultny konstruktor pre vytvorenie "prveho" blocku
-    public Block() {
+    public Block() throws IOException {
     }
 
 
-    public Block(String title, String basicInfo) {
+    public Block(String title, String basicInfo) throws IOException {
         this.title = title;
         this.basicInfo = basicInfo;
     }
@@ -27,7 +28,7 @@ public class Block {
         return basicInfo;
     }
 
-    public Block createBlock(){
+    public Block createBlock() throws IOException {
 
         System.out.print("Set title: ");
         String title = sc.nextLine();
@@ -38,7 +39,7 @@ public class Block {
     }
 
 
-    public void addCategory(ArrayList<Block> list){
+    public void addCategory(ArrayList<Block> list) throws IOException {
         System.out.println("Set cathegory:\n1 - continoue\n0 - end");
         String input = sc.nextLine();
         int counter = 0;
@@ -46,24 +47,33 @@ public class Block {
             System.out.println("Set cathegory: ");
             Block b = createBlock();
             list.add(b);
+
+            buffMan.bw.write(b.getTitle()+";"+b.getBasicInfo());
+            buffMan.bw.newLine();
+
             counter++;
             System.out.println("Wanna continue? :");
             input = sc.nextLine();
         }
-         //check if created succesfully
-        if (counter == list.size()){
-            System.out.println("Cathegories created succesfully, wanna see them? (1 - yes, 0 - no)");
 
-            if (sc.nextInt() == 1){
-                printCats(list);
-            }
+
+
+        //check if created succesfully
+        if (counter == list.size()){
+            System.out.println("Cathegories created succesfully");
         }
         else {
             System.out.println("Cath created unsuccessfully");
         }
+
+
     }
 
-    public void printCats(ArrayList<Block> list){
+    public void closeBufferedWriter() throws IOException {
+        buffMan.bw.close();
+    }
+
+    public void printCats(ArrayList<Block> list) throws IOException {
         String title = "Title";
         String basicInfo = "Basic info";
         int topSizeTitle = title.length();
@@ -162,6 +172,11 @@ public class Block {
             }
         }
         System.out.print("\n");
+    }
+
+
+    public void fillListFromTxt(ArrayList<Block> list){
+
     }
 }
 
