@@ -30,14 +30,21 @@ public class Main {
 
         BuffManager buffManager = BuffManager.BuffManager();
 
-        defBlock.addCategory(categories);//vytvorene funkcoiu create
+        defBlock.readCathegoryFromList(categories);
+
+        defBlock.creteAndAddCategory(categories);//vytvorene funkcoiu create
+        defBlock.printGraphicCats(categories);
+
         BuffManager.closeBuffer();
 
 
+    }
 
 
-
-
+    public static void printTestCathegory(){
+        for (Block b:categories){
+            System.out.println("Title: "+b.getTitle()+"\nInfo: "+b.getBasicInfo());
+        }
     }
 
 

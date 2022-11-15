@@ -34,21 +34,21 @@ public class Block {
         String title = sc.nextLine();
         System.out.print("Set basic info: ");
         String basicInfo = sc.nextLine();
-        Block block = new Block(title,basicInfo);
+        Block block = new Block(title, basicInfo);
         return block;
     }
 
 
-    public void addCategory(ArrayList<Block> list) throws IOException {
+    public void creteAndAddCategory(ArrayList<Block> list) throws IOException {
         System.out.println("Set cathegory:\n1 - continoue\n0 - end");
         String input = sc.nextLine();
         int counter = 0;
-        while(Integer.parseInt(input)!=0){
+        while (Integer.parseInt(input) != 0) {
             System.out.println("Set cathegory: ");
             Block b = createBlock();
             list.add(b);
 
-            buffMan.bw.write(b.getTitle()+";"+b.getBasicInfo());
+            buffMan.bw.write(b.getTitle() + ";" + b.getBasicInfo());
             buffMan.bw.newLine();
 
             counter++;
@@ -57,93 +57,101 @@ public class Block {
         }
 
 
-
         //check if created succesfully
-        if (counter == list.size()){
+        if (counter == list.size()) {
             System.out.println("Cathegories created succesfully");
-        }
-        else {
+        } else {
             System.out.println("Cath created unsuccessfully");
         }
 
 
     }
 
-    public void closeBufferedWriter() throws IOException {
-        buffMan.bw.close();
+    public void readCathegoryFromList(ArrayList<Block> list) throws IOException {
+        String line = buffMan.br.readLine();
+
+        while (line != null) {
+            Block bNew = new Block(line.split(";")[0], line.split(";")[1]);
+            addCategory(list, bNew);
+            line = buffMan.br.readLine();
+        }
     }
 
-    public void printCats(ArrayList<Block> list) throws IOException {
+    public void addCategory(ArrayList<Block> list, Block b) {
+        list.add(b);
+    }
+
+    public void printGraphicCats(ArrayList<Block> list) throws IOException {
         String title = "Title";
         String basicInfo = "Basic info";
         int topSizeTitle = title.length();
         int topSizeInfo = basicInfo.length();
-        for(Block b:list){
-            if (b.getTitle().length() >= topSizeTitle){
+        for (Block b : list) {
+            if (b.getTitle().length() >= topSizeTitle) {
                 topSizeTitle = b.getTitle().length();
             }
-            if (b.getBasicInfo().length() >= topSizeInfo){
+            if (b.getBasicInfo().length() >= topSizeInfo) {
                 topSizeInfo = b.getBasicInfo().length();
             }
         }
-        topSizeTitle+=2;
-        topSizeInfo+=2;
+        topSizeTitle += 2;
+        topSizeInfo += 2;
 
         //Actual printing
         //Table is printing the last row when there is only one Cathegory (aint happening in normal world)
-        printRow(1,topSizeTitle,topSizeInfo,new Block());
-        printRow(99,topSizeTitle,topSizeInfo,new Block(title,basicInfo));
-        printRow(2,topSizeTitle,topSizeInfo,new Block());
+        printRow(1, topSizeTitle, topSizeInfo, new Block());
+        printRow(99, topSizeTitle, topSizeInfo, new Block(title, basicInfo));
+        printRow(2, topSizeTitle, topSizeInfo, new Block());
 
-        for(Block b:list){
-            printRow(99,topSizeTitle,topSizeInfo,b);
-            printRow(2,topSizeTitle,topSizeInfo,b);
+
+        for (int i = 0; i <list.size() ; i++) {
+            if (i==list.size()-1){
+                printRow(99, topSizeTitle, topSizeInfo, list.get(i));
+                printRow(3, topSizeTitle, topSizeInfo, new Block());
+            }
+            else {
+                printRow(99, topSizeTitle, topSizeInfo, list.get(i));
+                printRow(2, topSizeTitle, topSizeInfo, list.get(i));
+            }
         }
 
-        printRow(3,topSizeTitle,topSizeInfo,new Block());
+
     }
-    public void printRow(int level, int topTitle, int topInfo, Block b){
-        int rowLength = topTitle+topInfo+3;
+
+    public void printRow(int level, int topTitle, int topInfo, Block b) {
+        int rowLength = topTitle + topInfo + 3;
 
 
-        if (level == 1){
-            char signs[] = {'┌','┬','┐','─'};
-            callSpecialRow(rowLength,topTitle,signs);
-        }
-        else if(level == 2){
-            char signs[] = {'├','┼','┤','─'};
-            callSpecialRow(rowLength,topTitle,signs);
-        }
-
-        else if (level == 3){
-            char signs[] = {'└','┴','┘','─'};
-            callSpecialRow(rowLength,topTitle,signs);
-        }
-        else {
+        if (level == 1) {
+            char signs[] = {'┌', '┬', '┐', '─'};
+            callSpecialRow(rowLength, topTitle, signs);
+        } else if (level == 2) {
+            char signs[] = {'├', '┼', '┤', '─'};
+            callSpecialRow(rowLength, topTitle, signs);
+        } else if (level == 3) {
+            char signs[] = {'└', '┴', '┘', '─'};
+            callSpecialRow(rowLength, topTitle, signs);
+        } else {
             int word1 = 0;
             int word2 = 0;
 
-            for (int i = 0; i <rowLength ; i++) {
-                if (i==0 || i==topTitle+1 || i==rowLength-1){
+            for (int i = 0; i < rowLength; i++) {
+                if (i == 0 || i == topTitle + 1 || i == rowLength - 1) {
                     System.out.print("│");
-                }
-                else if((i==1 || i==topTitle || i==topTitle+2 || i==rowLength-2)){
+                } else if ((i == 1 || i == topTitle || i == topTitle + 2 || i == rowLength - 2)) {
                     System.out.print(" ");
-                }
-                else{
-                    if (word1 >= b.getTitle().length()){
+                } else {
+                    if (word1 >= b.getTitle().length()) {
                         //print word2
-                        if (b.getBasicInfo().length() == word2 || word1<topTitle-2){
+                        if (b.getBasicInfo().length() == word2 || word1 < topTitle - 2) {
                             System.out.print(" ");
                             word1++;
-                        }
-                        else {
+                        } else {
                             System.out.print(b.getBasicInfo().charAt(word2));
                             word2++;
                         }
 
-                    }
-                    else {
+                    } else {
                         //print word1
                         System.out.print(b.getTitle().charAt(word1));
                         word1++;
@@ -156,18 +164,15 @@ public class Block {
         }
     }
 
-    public void callSpecialRow(int rowLength, int topTitle, char[]signs){
-        for (int i = 0; i <rowLength ; i++) {
-            if (i==0){
+    public void callSpecialRow(int rowLength, int topTitle, char[] signs) {
+        for (int i = 0; i < rowLength; i++) {
+            if (i == 0) {
                 System.out.print(signs[0]);
-            }
-            else if(i==topTitle+1){
+            } else if (i == topTitle + 1) {
                 System.out.print(signs[1]);
-            }
-            else if (i == rowLength-1) {
+            } else if (i == rowLength - 1) {
                 System.out.print(signs[2]);
-            }
-            else {
+            } else {
                 System.out.print(signs[3]);
             }
         }
@@ -175,8 +180,12 @@ public class Block {
     }
 
 
-    public void fillListFromTxt(ArrayList<Block> list){
+    public void fillListFromTxt(ArrayList<Block> list) {
 
+    }
+
+    public void printBlock(Block b) {
+        System.out.println("Title: " + b.getTitle() + "\nInfo: " + b.getBasicInfo());
     }
 }
 

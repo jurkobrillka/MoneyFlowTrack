@@ -10,7 +10,7 @@ public class BuffManager {
 
     private BuffManager() throws IOException {
         br = new BufferedReader(new FileReader("C:/TrackerFiles/Cathegory.txt"));
-        bw = new BufferedWriter(new FileWriter("C:/TrackerFiles/Cathegory.txt"));
+        bw = new BufferedWriter(new FileWriter("C:/TrackerFiles/Cathegory.txt",true));
     }
 
 
@@ -25,6 +25,7 @@ public class BuffManager {
 
     public static void closeBuffer() throws IOException {
         BuffManager().bw.close();
+        BuffManager().br.close();
     }
 
 
