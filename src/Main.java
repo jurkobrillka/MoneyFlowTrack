@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,28 +39,12 @@ public class Main {
         int menuChoice = sc.nextInt();
         while (true) {
             switch (menuChoice) {
-                case 1:
-                    System.out.println("Men in work");
-                    //add items
-                    break;
-                case 2:
-                    System.out.println("Men in work");
-                    //see today items
-                    break;
-                case 3:
-                    defBlock.creteAndAddCategory(categories);
-                    break;
-                case 4:
-                    defBlock.printGraphicCats(categories);
-                    break;
-
-
-
-                case 0:
-                    endProgram();
-                    break;
-                default:
-                    System.out.println("You chose invalid value, please try again.");
+                case 1 -> System.out.println("add items");
+                case 2 -> System.out.println("see today items");
+                case 3 -> defBlock.creteAndAddCategory(categories);
+                case 4 -> defBlock.printGraphicCats(categories);
+                case 0 -> endProgram();
+                default -> System.out.println("You chose invalid value, please try again.");
             }
 
             menu();
@@ -89,10 +71,8 @@ public class Main {
 
     public static void setupEnvironment() throws IOException {
 
-        String s = timeDateSingleton.cal.get(Calendar.YEAR) + "." + timeDateSingleton.cal.get(Calendar.MONTH) + "." + TimeDateSingleton.timeDateSingleton().cal.get(Calendar.DATE);
-        if (defFileSetup.doFIlesExist()) {
-            //everything OK
-        } else {
+        timeDateSingleton.cal.get(Calendar.YEAR);
+        if (!defFileSetup.doFIlesExist()) {
             defFileSetup.createAllDirectories();
         }
 

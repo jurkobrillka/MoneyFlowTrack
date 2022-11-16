@@ -9,8 +9,8 @@ public class FileSetup {
     public FileSetup() {
     }
 
-    private File currentYear = new File("C:/TrackerFiles/" + TimeDateSingleton.timeDateSingleton().cal.get(Calendar.YEAR));
-    private File nextYear = new File("C:/TrackerFiles/" + (TimeDateSingleton.timeDateSingleton().year + 1));
+    private final File currentYear = new File("C:/TrackerFiles/" + TimeDateSingleton.timeDateSingleton().cal.get(Calendar.YEAR));
+    private final File nextYear = new File("C:/TrackerFiles/" + (TimeDateSingleton.timeDateSingleton().year + 1));
 
 
     public boolean doFIlesExist() {
@@ -20,10 +20,7 @@ public class FileSetup {
             for (int i = 0; i < 2; i++) {
                 for (Months mon : Months.values()) {
                     File fMonth = new File("C:/TrackerFiles/" + (TimeDateSingleton.timeDateSingleton().year + i) + "/" + mon);
-                    if (fMonth.exists()) {
-                        //Month folder exist, continue
-                    } else {
-                        //month folder doesnt exist, return false and do reebot
+                    if (!fMonth.exists()) {
                         System.out.println("File:" + "C:/TrackerFiles/" + (TimeDateSingleton.timeDateSingleton().year + i) + "/" + mon + " is missing, program needs to reboot");
                         return false;
                     }
@@ -50,9 +47,9 @@ public class FileSetup {
         }
         else {
             //nothing there, probably first configuration
-            if (mainFile.mkdir() == true){
+            if (mainFile.mkdir()){
                 //mainFile was created successfully, continue
-                if (currentYear.mkdir() == true){
+                if (currentYear.mkdir()){
                     //creating months Files
                     createMonthsDirectories(0);
                 }
@@ -60,7 +57,7 @@ public class FileSetup {
                     System.out.println("Current year canot be created");
                 }
 
-                if (nextYear.mkdir() == true){
+                if (nextYear.mkdir()){
                     //creating months Files
                     createMonthsDirectories(1);
                 }
@@ -81,11 +78,10 @@ public class FileSetup {
                 deleteWholeDirectory(tmp);
             }
         }
-        if (file.delete()) {
-            //System.out.printf("Delete : %s%n", file);
-        } else {
-            //System.err.printf("Unable to delete file or directory : %s%n", file);
+        if (file.delete()){
+            System.out.print("");
         }
+
     }
 
     public void createMonthsDirectories(int nextYear) throws IOException {
@@ -93,10 +89,7 @@ public class FileSetup {
         boolean wholeCreation = true;
         for (Months mon : Months.values()) {
             File fMonth = new File("C:/TrackerFiles/" + (TimeDateSingleton.timeDateSingleton().year + nextYear) + "/" + mon);
-            if (fMonth.mkdir() == true){
-                //created successfully, continue
-            }
-            else {
+            if (!fMonth.mkdir()){
                 System.out.println("Folder cannot be created");
                 wholeCreation = false;
             }
