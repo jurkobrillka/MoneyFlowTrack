@@ -6,14 +6,13 @@ public class Block {
 
     Scanner sc = new Scanner(System.in);
 
-    private BuffManager buffMan = BuffManager.BuffManager();
+    //private final BuffManager buffMan = BuffManager.BuffManager();
     private String title;
     private String basicInfo;
 
 
     public Block() throws IOException {
     }
-
 
     public Block(String title, String basicInfo) throws IOException {
         this.title = title;
@@ -34,8 +33,7 @@ public class Block {
         String title = sc.nextLine();
         System.out.print("Set basic info: ");
         String basicInfo = sc.nextLine();
-        Block block = new Block(title, basicInfo);
-        return block;
+        return  new Block(title, basicInfo);
     }
 
 
@@ -48,8 +46,8 @@ public class Block {
             Block b = createBlock();
             list.add(b);
 
-            buffMan.bw.write(b.getTitle() + ";" + b.getBasicInfo());
-            buffMan.bw.newLine();
+            BuffManager.BuffManager().bw.write(b.getTitle() + ";" + b.getBasicInfo());
+            BuffManager.BuffManager().bw.newLine();
 
             counter++;
             System.out.println("Wanna continue? :");
@@ -68,12 +66,12 @@ public class Block {
     }
 
     public void readCathegoryFromList(ArrayList<Block> list) throws IOException {
-        String line = buffMan.br.readLine();
+        String line = BuffManager.BuffManager().br.readLine();
 
         while (line != null) {
             Block bNew = new Block(line.split(";")[0], line.split(";")[1]);
             addCategory(list, bNew);
-            line = buffMan.br.readLine();
+            line = BuffManager.BuffManager().br.readLine();
         }
     }
 
@@ -123,13 +121,13 @@ public class Block {
 
 
         if (level == 1) {
-            char signs[] = {'┌', '┬', '┐', '─'};
+            char[] signs = {'┌', '┬', '┐', '─'};
             callSpecialRow(rowLength, topTitle, signs);
         } else if (level == 2) {
-            char signs[] = {'├', '┼', '┤', '─'};
+            char[] signs = {'├', '┼', '┤', '─'};
             callSpecialRow(rowLength, topTitle, signs);
         } else if (level == 3) {
-            char signs[] = {'└', '┴', '┘', '─'};
+            char[] signs = {'└', '┴', '┘', '─'};
             callSpecialRow(rowLength, topTitle, signs);
         } else {
             int word1 = 0;
@@ -179,10 +177,6 @@ public class Block {
         System.out.print("\n");
     }
 
-
-    public void fillListFromTxt(ArrayList<Block> list) {
-
-    }
 
     public void printBlock(Block b) {
         System.out.println("Title: " + b.getTitle() + "\nInfo: " + b.getBasicInfo());
