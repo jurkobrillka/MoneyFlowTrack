@@ -1,3 +1,5 @@
+import com.sun.jdi.Value;
+
 import java.io.*;
 
 public class BuffManager {
@@ -7,10 +9,17 @@ public class BuffManager {
     public BufferedReader br;
     public BufferedWriter bw;
 
+    public BufferedWriter bwForItems;
+
 
     private BuffManager() throws IOException {
         br = new BufferedReader(new FileReader("C:/TrackerFiles/Cathegory.txt"));
         bw = new BufferedWriter(new FileWriter("C:/TrackerFiles/Cathegory.txt",true));
+    }
+
+    private BuffManager(int month, int year, String nameOfFile) throws IOException {
+        bwForItems = new BufferedWriter(new FileWriter("C:/TrackerFiles/"+Integer.toString(year)+"/"+ TimeDateSingleton.timeDateSingleton().monthsMap.get(month)+"/"+nameOfFile+".txt"));
+
     }
 
 

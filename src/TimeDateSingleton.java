@@ -17,7 +17,10 @@ public class TimeDateSingleton {
     public int month;
     public int day;
 
-    public Map<Months, Integer> monthsMap = new HashMap<>();
+    public Map<Integer, Months> monthsMap = new HashMap<>();
+    public Map<Months, Integer> monthsMapNotSorted = new HashMap<>();
+    //ugly code I am sorry
+
 
     private TimeDateSingleton() {
         date = new Date();
@@ -28,7 +31,8 @@ public class TimeDateSingleton {
 
         int index = 0;
         for (Months mon : Months.values()) {
-            monthsMap.put(mon, index);
+            monthsMap.put(index, mon);
+            monthsMapNotSorted.put(mon,index);
             index++;
         }
     }
@@ -38,6 +42,14 @@ public class TimeDateSingleton {
             single_instance = new TimeDateSingleton();
         }
         return single_instance;
+    }
+
+    public int returnIndexMonth(){
+        int index = 0;
+        for (Months mon: Months.values()){
+
+        }
+        return index;
     }
 
 

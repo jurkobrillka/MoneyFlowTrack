@@ -16,6 +16,9 @@ public class Main {
     public static ArrayList<Item> expenditures = new ArrayList<>();
     public static Block defBlock;
 
+    public static boolean areItemsSaved = false;
+
+
     static {
         try {
             defBlock = new Block();
@@ -39,10 +42,11 @@ public class Main {
         int menuChoice = sc.nextInt();
         while (true) {
             switch (menuChoice) {
-                case 1 -> System.out.println("add items");
-                case 2 -> System.out.println("see today items");
-                case 3 -> defBlock.creteAndAddCategory(categories);
-                case 4 -> defBlock.printGraphicCats(categories);
+                case 1 -> defItem.createAndAddItem(expenditures,categories);
+                case 2 -> defItem.printExpenditures(expenditures);
+                case 3 -> defItem.saveTodaysItems(TimeDateSingleton.timeDateSingleton().month,categories,expenditures);
+                case 4 -> defBlock.creteAndAddCategory(categories);
+                case 5 -> defBlock.printGraphicCats(categories);
                 case 0 -> endProgram();
                 default -> System.out.println("You chose invalid value, please try again.");
             }
@@ -63,8 +67,9 @@ public class Main {
         System.out.println("Money Flow Tracker\nBy Juraj Brilla\n\n\nChoose from the menu:");
         System.out.println("1: Add item");
         System.out.println("2: See todays item");
-        System.out.println("3: Add cathegory");
-        System.out.println("4: See cathegory");
+        System.out.println("3: Write todays expenditures to file");
+        System.out.println("4: Add cathegory");
+        System.out.println("5: See cathegory");
         System.out.println("0: End");
         System.out.println("\nYour choice: ");
     }
