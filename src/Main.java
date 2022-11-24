@@ -44,9 +44,11 @@ public class Main {
             switch (menuChoice) {
                 case 1 -> defItem.createAndAddItem(expenditures,categories);
                 case 2 -> defItem.printExpenditures(expenditures);
-                case 3 -> defItem.saveTodaysItems(TimeDateSingleton.timeDateSingleton().month,categories,expenditures);
-                case 4 -> defBlock.creteAndAddCategory(categories);
-                case 5 -> defBlock.printGraphicCats(categories);
+                case 3 -> defItem.deleteTodayItem(expenditures);
+                case 4 -> defItem.saveTodaysItems(TimeDateSingleton.timeDateSingleton().month,categories,expenditures);
+                case 5 -> defBlock.creteAndAddCategory(categories);
+                case 6 -> defBlock.printGraphicCats(categories);
+                case 7 -> defBlock.deleteCategory(categories);
                 case 0 -> endProgram();
                 default -> System.out.println("You chose invalid value, please try again.");
             }
@@ -67,9 +69,11 @@ public class Main {
         System.out.println("Money Flow Tracker\nBy Juraj Brilla\n\n\nChoose from the menu:");
         System.out.println("1: Add item");
         System.out.println("2: See todays item");
-        System.out.println("3: Write todays expenditures to file");
-        System.out.println("4: Add cathegory");
-        System.out.println("5: See cathegory");
+        System.out.println("3: Delete today item");
+        System.out.println("4: Write todays expenditures to file");
+        System.out.println("5: Add category");
+        System.out.println("6: See category");
+        System.out.println("7: Delete category");
         System.out.println("0: End");
         System.out.println("\nYour choice: ");
     }

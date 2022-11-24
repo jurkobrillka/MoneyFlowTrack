@@ -36,6 +36,27 @@ public class Block {
         return  new Block(title, basicInfo);
     }
 
+    public void deleteCategory(ArrayList<Block> categories) throws IOException {
+        System.out.println("Set title of cathegory which you want delete: ");
+        String toDelete = sc.nextLine();
+        boolean isDeleted = false;
+        for (Block b: categories){
+            if (b.getTitle().equals(toDelete)){
+                categories.remove(b);
+                isDeleted = true;
+                break;
+            }
+        }
+        if (isDeleted){
+            System.out.println("Category with title "+toDelete+ " is successfully deleted.");
+        }
+        else{
+            System.out.println("You wrote incorrect Title, try again...");
+        }
+
+        rewriteCategories(categories);
+    }
+
 
     public void creteAndAddCategory(ArrayList<Block> list) throws IOException {
         System.out.println("Set cathegory:\n1 - continoue\n0 - end");
@@ -175,6 +196,16 @@ public class Block {
             }
         }
         System.out.print("\n");
+    }
+
+    public void rewriteCategories(ArrayList<Block> blocksList) throws IOException {
+        BuffManager.BuffManager().bw.flush();
+        BufferedWriter bwX = new BufferedWriter(new FileWriter("C:/TrackerFiles/Cathegory.txt",false));
+        bwX.close();
+        for (Block b:blocksList){
+            BuffManager.BuffManager().bw.write(b.getTitle() + ";" + b.getBasicInfo());
+            BuffManager.BuffManager().bw.newLine();
+        }
     }
 
 

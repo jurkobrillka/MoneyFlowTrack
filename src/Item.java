@@ -18,6 +18,22 @@ public class Item {
         this.important = important;
     }
 
+    public Scanner getSc() {
+        return sc;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean isImportant() {
+        return important;
+    }
+
     public void createAndAddItem(ArrayList<Item> items, ArrayList<Block>categories){
         items.add(createItem(categories));
     }
@@ -95,7 +111,29 @@ public class Item {
             }
         }
         return new Block();
+    }
 
+    public void deleteTodayItem(ArrayList<Item> itemsList){
+        System.out.println("Set the price of item:");
+        double toDeletePrice = sc.nextDouble();
+        System.out.println("Set the Category of item:");
+        String toDeleteCat = sc.nextLine();
+        boolean isDeleted = false;
+
+        for (Item i:itemsList){
+            if (i.getPrice() == toDeletePrice && i.getBlock().equals(toDeleteCat)){
+                itemsList.remove(i);
+                isDeleted = true;
+                break;
+            }
+        }
+
+        if (isDeleted){
+            System.out.println("Category with category "+toDeleteCat+" and price "+toDeletePrice+" is successfully deleted.");
+        }
+        else {
+            System.out.println("There is no item with "+toDeleteCat+ " category and "+toDeletePrice+" price. Please try again.");
+        }
     }
 
 
