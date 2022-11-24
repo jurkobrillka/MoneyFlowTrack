@@ -42,10 +42,11 @@ public class Main {
         int menuChoice = sc.nextInt();
         while (true) {
             switch (menuChoice) {
-                case 1 -> defItem.createAndAddItem(expenditures,categories);
+                case 1 -> defItem.createAndAddItem(expenditures, categories);
                 case 2 -> defItem.printExpenditures(expenditures);
                 case 3 -> defItem.deleteTodayItem(expenditures);
-                case 4 -> defItem.saveTodaysItems(TimeDateSingleton.timeDateSingleton().month,categories,expenditures);
+                case 4 ->
+                        defItem.saveTodaysItems(TimeDateSingleton.timeDateSingleton().month, categories, expenditures);
                 case 5 -> defBlock.creteAndAddCategory(categories);
                 case 6 -> defBlock.printGraphicCats(categories);
                 case 7 -> defBlock.deleteCategory(categories);
@@ -86,7 +87,8 @@ public class Main {
         }
 
         defBlock.readCathegoryFromList(categories);
-
+        defItem.readTodaysItem(expenditures, categories);
+        categories.size();
     }
 
 

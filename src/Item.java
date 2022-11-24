@@ -73,6 +73,11 @@ public class Item {
 
     }
 
+    public Item createItem(Block b, double price, boolean importance, ArrayList<Block> blockList) throws IOException {
+        Item i = new Item(b, price, importance);
+        return i;
+    }
+
     public void writeNewItems(String nameOfFile, ArrayList<Block> blocList, ArrayList<Item> todaysItems) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(nameOfFile));
         BufferedReader br = new BufferedReader(new FileReader(nameOfFile));
@@ -117,8 +122,11 @@ public class Item {
         System.out.println("Set the ID of today item:");
         int toDeleteIndex = sc.nextInt();
         int lenBefore = itemsList.size();
-        itemsList.remove(itemsList.get(toDeleteIndex));
-
+        try {
+            itemsList.remove(itemsList.get(toDeleteIndex));
+        } catch (Exception e) {
+            System.out.println("Try again");
+        }
 
         if (lenBefore - 1 == itemsList.size()) {
             System.out.println("Category with ID: " + toDeleteIndex + ". is successfully deleted.");
@@ -139,4 +147,16 @@ public class Item {
     }
 
 
+    public void readTodaysItem(ArrayList<Item> expenditures, ArrayList<Block> categoriesList) throws IOException {
+
+        String line = BuffManager.BuffManager().todaysItemReader.readLine();
+
+        while (line != null) {
+            String[] parts = line.split(";");
+
+            expenditures.add(createItem(returnBlock(categoriesList, parts[0]), Double.parseDouble(parts[1]), Boolean.parseBoolean(parts[2]), categoriesList));
+            line = BuffManager.BuffManager().todaysItemReader.readLine();
+        }
+
+    }
 }
