@@ -18,6 +18,14 @@ public class BuffManager {
     private BuffManager() throws IOException {
         br = new BufferedReader(new FileReader("C:/TrackerFiles/Cathegory.txt"));
         bw = new BufferedWriter(new FileWriter("C:/TrackerFiles/Cathegory.txt",true));
+        File todayFile = new File(getPathForTodayItem());
+        todayFile.createNewFile();
+        if (todayFile.exists()){
+            System.out.println("BRUHBRUHBRUH");
+        }
+        else {
+            System.out.println("JAk to ze to nefunguje more");
+        }
         todaysItemReader = new BufferedReader(new FileReader(getPathForTodayItem()));
         todaysItemWriter = new BufferedWriter(new FileWriter(getPathForTodayItem(),true));
 
